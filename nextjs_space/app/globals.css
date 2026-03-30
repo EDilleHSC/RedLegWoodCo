@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[data-hydration-error] {
+  display: none !important;
+}
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 20 14% 10%;
+  --card: 30 20% 98%;
+  --card-foreground: 20 14% 10%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 20 14% 10%;
+  --primary: 25 60% 35%;
+  --primary-foreground: 40 30% 95%;
+  --secondary: 30 15% 92%;
+  --secondary-foreground: 20 14% 20%;
+  --muted: 30 10% 94%;
+  --muted-foreground: 20 10% 45%;
+  --accent: 25 40% 90%;
+  --accent-foreground: 25 60% 25%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 30 15% 88%;
+  --input: 30 15% 88%;
+  --ring: 25 60% 35%;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 20 14% 8%;
+  --foreground: 40 20% 92%;
+  --card: 20 14% 12%;
+  --card-foreground: 40 20% 92%;
+  --popover: 20 14% 10%;
+  --popover-foreground: 40 20% 92%;
+  --primary: 30 55% 45%;
+  --primary-foreground: 20 14% 8%;
+  --secondary: 20 10% 18%;
+  --secondary-foreground: 40 20% 85%;
+  --muted: 20 10% 16%;
+  --muted-foreground: 30 10% 55%;
+  --accent: 25 30% 20%;
+  --accent-foreground: 30 55% 55%;
+  --destructive: 0 62% 45%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 20 10% 20%;
+  --input: 20 10% 20%;
+  --ring: 30 55% 45%;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--muted-foreground) / 0.3) transparent;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}

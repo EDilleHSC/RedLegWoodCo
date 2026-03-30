@@ -1,0 +1,78 @@
+generator client {
+    provider = "prisma-client-js"
+    binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+    output = "/home/ubuntu/redleg_hardwood_calculator/nextjs_space/node_modules/.prisma/client"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Supplier {
+  id           Int          @id @default(autoincrement())
+  name         String
+  contact      String?      @default("")
+  phone        String?      @default("")
+  email        String?      @default("")
+  address      String?      @default("")
+  taxRate      Float        @default(0) @map("tax_rate")
+  taxExempt    Boolean      @default(false) @map("tax_exempt")
+  deliveryFee  Float        @default(0) @map("delivery_fee")
+  notes        String?      @default("")
+  createdAt    DateTime     @default(now()) @map("created_at")
+  updatedAt    DateTime     @updatedAt @map("updated_at")
+  priceSheets  PriceSheet[]
+
+  @@map("suppliers")
+}
+
+model PriceSheet {
+  id                Int      @id @default(autoincrement())
+  supplierId        Int      @map("supplier_id")
+  species           String
+  grade             String
+  thicknessQuarters Int      @map("thickness_quarters")
+  pricePerBf        Float    @map("price_per_bf")
+  widthQualifier    String?  @map("width_qualifier")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+  supplier          Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+
+  @@unique([supplierId, species, grade, thicknessQuarters, widthQualifier], name: "unique_price")
+  @@map("price_sheets")
+}
+
+model Project {
+  id        Int           @id @default(autoincrement())
+  name      String
+  client    String?       @default("")
+  notes     String?       @default("")
+  createdAt DateTime      @default(now()) @map("created_at")
+  items     ProjectItem[]
+
+  @@map("projects")
+}
+
+model ProjectItem {
+  id                Int     @id @default(autoincrement())
+  projectId         Int     @map("project_id")
+  species           String
+  grade             String? @default("")
+  thicknessQuarters Int?    @map("thickness_quarters")
+  widthInches       Float?  @map("width_inches")
+  lengthInches      Float?  @map("length_inches")
+  quantity          Int     @default(1)
+  boardFeet         Float?  @map("board_feet")
+  pricePerBf        Float?  @map("price_per_bf")
+  totalCost         Float?  @map("total_cost")
+  project           Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("project_items")
+}
+
+model Setting {
+  key   String @id
+  value String
+
+  @@map("settings")
+}
